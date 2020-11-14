@@ -1,0 +1,44 @@
+.quiz{
+  min-width: 500px;
+  max-width: 50%;
+  margin: auto;
+  padding: 30px 40px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 1px 10px rgba(205, 209, 212, 0.64);
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+}
+
+.title{
+  font-size: 20px;
+  line-height: 1.2;
+  color: #333333;
+}
+
+.counter{
+  font-size: 14px;
+  line-height: 1.2;
+  color: #c3c6cc;
+}
+
+.line{
+  width: 30%;
+  height: 8px;
+  border-radius: 4px;
+  background: #F85565;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.question{
+  font-size: 28px;
+  line-height: 1.4;
+  color: #1E2E4A;
+  padding-top: 20px;
+}

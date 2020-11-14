@@ -1,0 +1,19 @@
+.result{
+  margin: 15px 0 50px;
+  tr{
+    td{
+      font-size: 16px;
+      line-height: 1.2;
+      color: #333333;
+      font-weight: 600;
+      padding: 5px;
+      vertical-align: top;
+    }
+  }
+  &--correct{
+    color: #49b518;
+  }
+  &--wrong{
+    color: #F85565;
+  }
+}

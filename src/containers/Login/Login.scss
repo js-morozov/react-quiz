@@ -1,0 +1,38 @@
+.login-box{
+  min-width: 700px;
+  max-width: 50%;
+  margin: auto;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 1px 10px rgba(205, 209, 212, 0.64);
+  overflow: hidden;
+  &__title{
+    font-size: 28px;
+    line-height: 1.4;
+    color: #1E2E4A;
+    padding-bottom: 20px;
+  }
+  &--image{
+    padding-left: 250px;
+    background: #ffffff url(../../images/form-login-bg.jpg) left center no-repeat;
+    background-size: auto 100%;
+  }
+  &__form{
+    background: #ffffff;
+    padding: 30px 40px;
+    &-item{
+      margin-bottom: 20px;
+    }
+    &-link{
+      cursor: pointer;
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: center;
+      transition: all ease-in .2s;
+      &:hover{
+        color: #F85565;
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.header{
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0px 1px 10px rgba(205, 209, 212, 0.64);
+}
+
+.menu{
+  padding: 0 15px;
+  &__list{
+    display: flex;
+  }
+  &__item{
+    margin-right: 15px;
+  }
+  &__link{
+    display: block;
+    padding: 15px;
+    font-size: 16px;
+    line-height: 1.2;
+    color: #333333;
+    text-transform: uppercase;
+    font-weight: 600;
+    &:hover, &--active{
+      color: #F85565;
+    }
+  }
+}
