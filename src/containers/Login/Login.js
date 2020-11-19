@@ -2,9 +2,10 @@ import React from 'react';
 import './Login.scss'
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
-import axios from 'axios'
+import { auth } from '../../store/actions/auth'
+import { connect } from 'react-redux';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   state = {
     singIn: true,
     email: 'frontend.morozov@gmail.com',
@@ -16,33 +17,13 @@ export default class Login extends React.Component {
   }
 
   // Регистрация пользователя
-  signUp = async () => {
-    const authData = {
-      email: this.state.email,
-      password: this.state.password,
-      returnSecureToken: true
-    }
-    try {
-      const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDmehtTLcIy6CkW7hvrN6ziGGlCLUDg3PE', authData)
-      console.log(response.data)
-    } catch (error) {
-      console.error(error)
-    }
+  signUp = () => {
+    this.props.auth(this.state.email, this.state.password, false)
   }
 
   // Войти в систему
-  signIn = async () => {
-    const authData = {
-      email: this.state.email,
-      password: this.state.password,
-      returnSecureToken: true
-    }
-    try {
-      const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDmehtTLcIy6CkW7hvrN6ziGGlCLUDg3PE', authData)
-      console.log(response.data)
-    } catch (error) {
-      console.error(error)
-    }
+  signIn = () => {
+    this.props.auth(this.state.email, this.state.password, true)
   }
 
   render() {
@@ -93,3 +74,11 @@ export default class Login extends React.Component {
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Login)
