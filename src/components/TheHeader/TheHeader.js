@@ -2,23 +2,31 @@ import React from 'react';
 import './TheHeader.scss'
 import { NavLink } from 'react-router-dom'
 
-const TheHeader = () => {
-
+const TheHeader = (props) => {
   const links = [
     {
       to: '/',
       label: 'Login',
-      exact: true
+      exact: true,
+      visible: !props.isAuthenticated
     },
     {
       to: '/create-test',
       label: 'Create test',
-      exact: true
+      exact: true,
+      visible: props.isAuthenticated
     },
     {
       to: '/test',
       label: 'Test',
-      exact: true
+      exact: true,
+      visible: props.isAuthenticated
+    },
+    {
+      to: '/logout',
+      label: 'Logout',
+      exact: true,
+      visible: props.isAuthenticated
     },
   ]
 
@@ -27,7 +35,7 @@ const TheHeader = () => {
       <nav className="menu">
         <ul className="menu__list">
           {
-            links.map((link, index) => {
+            links.filter(link => link.visible).map((link, index) => {
               return (
                 <li className="menu__item" key={index}>
                   <NavLink
