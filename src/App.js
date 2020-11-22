@@ -8,7 +8,6 @@ import { Route, Switch, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import Logout from './components/Logout/Logout';
 import { autoLogin } from './store/actions/auth'
-import { NotificationContainer } from 'react-notifications'
 
 class App extends React.Component {
 
@@ -42,7 +41,6 @@ class App extends React.Component {
       <Layout>
         <TheHeader isAuthenticated={this.props.isAuthenticated} />
         {routes}
-        <NotificationContainer />
       </Layout>
     )
   }

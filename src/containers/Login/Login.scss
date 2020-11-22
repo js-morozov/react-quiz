@@ -6,6 +6,7 @@
   border-radius: 15px;
   box-shadow: 0px 1px 10px rgba(205, 209, 212, 0.64);
   overflow: hidden;
+  position: relative;
   &__title{
     font-size: 28px;
     line-height: 1.4;
@@ -19,7 +20,7 @@
   }
   &__form{
     background: #ffffff;
-    padding: 30px 40px;
+    padding: 30px 40px 45px;
     &-item{
       margin-bottom: 20px;
     }
@@ -34,5 +35,20 @@
         color: #F85565;
       }
     }
+  }
+  &__actions{
+    margin-top: 25px;
+  }
+  &__error{
+    display: block;
+    padding-top: 5px;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #F85565;
+    position: absolute;
+    right: 25px;
+    bottom: 15px;
+    z-index: 10;
   }
 }

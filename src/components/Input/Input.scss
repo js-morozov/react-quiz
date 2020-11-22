@@ -1,5 +1,6 @@
 .input{
   flex-grow: 1;
+  position: relative;
   &__label{
     display: block;
     margin-bottom: 8px;
@@ -15,6 +16,9 @@
     padding: 0 15px;
     outline: none;
     transition: all ease-in .2s;
+    &--error{
+      border-color: #F85565;
+    }
   }
   &__error{
     display: block;
@@ -22,6 +26,10 @@
     font-size: 14px;
     line-height: 1.2;
     color: #F85565;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
   }
   &--invalid{
     .input__label{

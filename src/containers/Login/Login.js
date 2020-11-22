@@ -9,14 +9,14 @@ import * as Yup from "yup";
 class Login extends React.Component {
   state = {
     formInitialState: {
-      email: '',
-      password: ''
+      email: 'frontend.morozov@gmail.com',
+      password: '322141357'
     },
     signInSchema: Yup.object().shape({
       email: Yup.string().email("Не правильный email").required("Введите email"),
       password: Yup.string()
         .required("Введите пароль")
-        .min(6, "Пароль должен быть минимум 6 символов"),
+        .min(6, "Минимум 6 символов"),
     })
   }
 
@@ -43,52 +43,57 @@ class Login extends React.Component {
             {(formik) => {
               const { errors, touched } = formik;
               return (
-                <div className="container">
-                  <h2 className="login-box__title">{this.state.singIn ? 'Войти в аккаунт' : 'Регистрация'}</h2>
-                  <Form>
-                    <div className="login-box__form-item">
-                      <div className="input">
-                        <label htmlFor="email" className="input__label">Email</label>
-                        <Field
-                          type="email"
-                          name="email"
-                          id="email"
-                          className={errors.email && touched.email ?
-                            "input-error" : null}
-                          className="input__item"
-                        />
-                      </div>
+                <Form>
+                  <h2 className="login-box__title">
+                    {this.state.singIn ? 'Войти в аккаунт' : 'Регистрация'}
+                  </h2>
+                  <div className="login-box__form-item">
+                    <div className="input">
+                      <label htmlFor="email" className="input__label">Email</label>
+                      <Field
+                        type="email"
+                        name="email"
+                        id="email"
+                        className={['input__item', errors.email && touched.email ? 'input__item--error' : ''].join(' ')}
+                      />
                       <ErrorMessage name="email" component="span" className="input__error" />
                     </div>
+                  </div>
 
-                    <div className="login-box__form-item">
+                  <div className="login-box__form-item">
+                    <div className="input">
                       <label htmlFor="password" className="input__label">Password</label>
                       <Field
                         type="password"
                         name="password"
                         id="password"
-                        className={errors.password && touched.password ?
-                          "input-error" : null}
-                        className="input__item"
+                        className={['input__item', errors.password && touched.password ? 'input__item--error' : ''].join(' ')}
                       />
                       <ErrorMessage name="password" component="span" className="input__error" />
                     </div>
+                  </div>
+                  <div className="login-box__actions">
                     <Button
                       center
                       type="submit"
                       onClick={this.signIn}
                     >Войти</Button>
-                  </Form>
-                </div>
+                    <span className="login-box__form-link">Регистрация</span>
+                  </div>
+                  <span className="login-box__error">{this.props.authErrors.join(' ')}</span>
+                </Form>
               );
             }}
           </Formik>
         </div>
-        {/* <span className="login-box__form-link" onClick={() => { this.setState({ singIn: !this.state.singIn }) }}>
-          {this.state.singIn ? 'Регистрация' : 'Войти в аккаунт'}
-        </span> */}
       </div>
     );
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    authErrors: state.auth.errors
   }
 }
 
@@ -98,4 +103,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

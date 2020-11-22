@@ -1,26 +1,5 @@
 import axios from 'axios'
-import { AUTH_SUCCESS, AUTH_LOGOUT } from './actionsType'
-import { NotificationManager } from 'react-notifications';
-
-const createNotification = (type) => {
-  console.log(type)
-  switch (type) {
-    case 'INVALID_PASSWORD':
-      NotificationManager.info('Info message');
-      break;
-    // case 'success':
-    //   NotificationManager.success('Success message', 'Title here');
-    //   break;
-    // case 'warning':
-    //   NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
-    //   break;
-    // case 'error':
-    //   NotificationManager.error('Error message', 'Click me!', 5000, () => {
-    //     alert('callback');
-    //   });
-    //   break;
-  }
-}
+import { AUTH_SUCCESS, AUTH_ERRORS, AUTH_LOGOUT } from './actionsType'
 
 export function auth(email, password, isLogin) {
   return dispatch => {
@@ -45,11 +24,9 @@ export function auth(email, password, isLogin) {
 
       dispatch(authSuccess(data.idToken))
       dispatch(autoLogout(data.expiresIn))
+      dispatch(authErrors([]))
     }).catch((error) => {
-      const errors = error.response.data.error.errors.map(errorItem => errorItem.message)
-      errors.forEach(item => {
-        createNotification(item)
-      })
+      dispatch(authErrors(error.response.data.error.errors.map(errorItem => errorItem.message)))
     })
   }
 }
@@ -58,6 +35,26 @@ export function authSuccess(token) {
   return {
     type: AUTH_SUCCESS,
     token
+  }
+}
+
+export function authErrors(errors) {
+  const errorsMessages = []
+  errors.forEach(error => {
+    switch (error) {
+      case 'EMAIL_NOT_FOUND':
+        errorsMessages.push('Такого email не существует')
+        break
+      case 'INVALID_PASSWORD':
+        errorsMessages.push('Неправильный пароль')
+        break
+      default:
+        errorsMessages.push('Доступ к аккаунту временно закрыт')
+    }
+  })
+  return {
+    type: AUTH_ERRORS,
+    errors: errorsMessages
   }
 }
 
