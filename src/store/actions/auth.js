@@ -1,8 +1,29 @@
 import axios from 'axios'
 import { AUTH_SUCCESS, AUTH_LOGOUT } from './actionsType'
+import { NotificationManager } from 'react-notifications';
+
+const createNotification = (type) => {
+  console.log(type)
+  switch (type) {
+    case 'INVALID_PASSWORD':
+      NotificationManager.info('Info message');
+      break;
+    // case 'success':
+    //   NotificationManager.success('Success message', 'Title here');
+    //   break;
+    // case 'warning':
+    //   NotificationManager.warning('Warning message', 'Close after 3000ms', 3000);
+    //   break;
+    // case 'error':
+    //   NotificationManager.error('Error message', 'Click me!', 5000, () => {
+    //     alert('callback');
+    //   });
+    //   break;
+  }
+}
 
 export function auth(email, password, isLogin) {
-  return async dispatch => {
+  return dispatch => {
     const authData = {
       email,
       password,
@@ -13,17 +34,23 @@ export function auth(email, password, isLogin) {
     if (isLogin) {
       url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDmehtTLcIy6CkW7hvrN6ziGGlCLUDg3PE'
     }
-    const response = await axios.post(url, authData)
-    const data = response.data
 
-    const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
+    axios.post(url, authData).then((response) => {
+      const data = response.data
+      const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000)
 
-    localStorage.setItem('token', data.idToken)
-    localStorage.setItem('userId', data.localId)
-    localStorage.setItem('expirationDate', expirationDate)
+      localStorage.setItem('token', data.idToken)
+      localStorage.setItem('userId', data.localId)
+      localStorage.setItem('expirationDate', expirationDate)
 
-    dispatch(authSuccess(data.idToken))
-    dispatch(autoLogout(data.expiresIn))
+      dispatch(authSuccess(data.idToken))
+      dispatch(autoLogout(data.expiresIn))
+    }).catch((error) => {
+      const errors = error.response.data.error.errors.map(errorItem => errorItem.message)
+      errors.forEach(item => {
+        createNotification(item)
+      })
+    })
   }
 }
 
