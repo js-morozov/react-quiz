@@ -78,7 +78,7 @@ class Login extends React.Component {
                       type="submit"
                       onClick={this.signIn}
                     >Войти</Button>
-                    <span className="login-box__form-link">Регистрация</span>
+                    <span className="login-box__form-link">Войти в аккаунт</span>
                   </div>
                   <span className="login-box__error">{this.props.authErrors.join(' ')}</span>
                 </Form>

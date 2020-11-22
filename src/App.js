@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from './hoc/Layout/Layout'
 import Quiz from './containers/Quiz/Quiz'
+import QuizList from './containers/QuizList/QuizList'
 import TestCreator from './containers/TestCreator/TestCreator'
 import Login from './containers/Login/Login'
 import TheHeader from './components/TheHeader/TheHeader'
@@ -18,17 +19,16 @@ class App extends React.Component {
   render() {
     let routes = (
       <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/test" component={Quiz} />
-        <Route exact path="/create-test" component={TestCreator} />
-        <Redirect to="/" />
+        <Route exact path="/" component={QuizList} />
+        <Route exact path="/login" component={Login} />
+        <Redirect to="/login" />
       </Switch>
     )
 
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route exact path="/" component={Login} />
+          <Route exact path="/" component={QuizList} />
           <Route exact path="/test" component={Quiz} />
           <Route exact path="/create-test" component={TestCreator} />
           <Route exact path="/logout" component={Logout} />

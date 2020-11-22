@@ -6,6 +6,12 @@ const TheHeader = (props) => {
   const links = [
     {
       to: '/',
+      label: 'Test list',
+      exact: true,
+      visible: true
+    },
+    {
+      to: '/login',
       label: 'Login',
       exact: true,
       visible: !props.isAuthenticated
