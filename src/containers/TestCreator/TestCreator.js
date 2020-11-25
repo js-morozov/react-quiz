@@ -5,10 +5,13 @@ import Button from '../../components/Button/Button'
 import Radio from '../../components/Radio/Radio'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios';
 
 export default class TestCreator extends React.Component {
 
   state = {
+    test: [],
+    question: '',
     answers: [{ text: '', correct: false }]
   }
 
@@ -47,12 +50,38 @@ export default class TestCreator extends React.Component {
     event.preventDefault()
   }
 
+  clearFields = () => {
+    this.setState({
+      question: '',
+      answers: [{ text: '', correct: false }]
+    })
+  }
+
+  addQuestionToTest = () => {
+    const { test, question, answers } = this.state
+    test.push({
+      question,
+      answers
+    })
+    this.setState({ test })
+    this.clearFields()
+  }
+
+  finishCreate = () => {
+    const test = [...this.state.test]
+    axios.post('https://quiz-12b33.firebaseio.com/quizes.json', test).then(response => {
+      console.log(response)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
   render() {
     return (
       <form onSubmit={this.submitHandler} className="test-creator">
         <h1 className="test-creator__title">Создать тест</h1>
         <div className="test-creator__item">
-          <Input label="Вопрос" />
+          <Input label="Вопрос" value={this.state.question} onChange={(e) => this.setState({ question: e.target.value })} />
         </div>
         <div className="test-creator__group">
           {
@@ -77,8 +106,8 @@ export default class TestCreator extends React.Component {
           }
         </div>
         <div className="test-creator__buttons">
-          <Button>Добавить вопрос</Button>
-          <Button primary>Завершить</Button>
+          <Button onClick={this.addQuestionToTest}>Добавить вопрос</Button>
+          <Button primary onClick={this.finishCreate}>Завершить</Button>
         </div>
       </form>
     );
