@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import { NavLink } from 'react-router-dom'
+import axios from '../../axios/axios'
 
 class QuizList extends Component {
 
@@ -9,7 +10,7 @@ class QuizList extends Component {
 
   async componentDidMount() {
     try {
-      const { data } = await axios.get('https://quiz-12b33.firebaseio.com/quizes.json')
+      const { data } = await axios.get('/quizes.json')
       const tests = []
       Object.keys(data).forEach((item, index) => {
         tests.push({
@@ -18,7 +19,6 @@ class QuizList extends Component {
           questions: data[item]
         })
       })
-      console.log(tests)
       this.setState({ tests })
     } catch (error) {
       console.log(error)
@@ -32,7 +32,11 @@ class QuizList extends Component {
         <ul>
           {this.state.tests.map((test) => {
             return (
-              <li key={test.id}><strong>{test.name}.</strong> Test ID: {test.id}</li>
+              <li key={test.id}>
+                <NavLink to={'test/' + test.id}>
+                  <strong>{test.name}.</strong> Test ID: {test.id}
+                </NavLink>
+              </li>
             )
           })}
         </ul>

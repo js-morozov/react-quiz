@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from '../../axios/axios'
 import List from '../../components/List/List'
 import ListItem from '../../components/List/ListItem/ListItem'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
@@ -15,110 +16,24 @@ class Quiz extends Component {
     currentQuestionIndex: 0,
     test: [
       {
-        id: 1,
-        question: 'Выберите HTML тег для самого крупного заголовка',
-        answers: [
-          {
-            text: '<head>',
-            correct: false
-          },
-          {
-            text: '<h6>',
-            correct: false
-          },
-          {
-            text: '<heading>',
-            correct: false
-          },
-          {
-            text: '<h1>',
-            correct: true
-          },
-        ]
-      },
-      {
-        id: 2,
-        question: 'Выберите правильный HTML тег для переноса на новую строку?',
-        answers: [
-          {
-            text: '<br>',
-            correct: true
-          }, {
-            text: '<break>',
-            correct: false
-          },
-          {
-            text: '<lb>',
-            correct: false
-          },
-        ]
-      },
-      {
-        id: 3,
-        question: 'Выберите правильный способ создания ссылки?',
-        answers: [
-          {
-            text: '<a name="http://www.w3schools.com">W3Schools.com</a>',
-            correct: false
-          }, {
-            text: '<a href="http://www.w3schools.com">W3Schools</a>',
-            correct: true
-          },
-          {
-            text: '<a>http://www.w3schools.com</a>',
-            correct: false
-          },
-          {
-            text: '<a url="http://www.w3schools.com">W3Schools.com</a>',
-            correct: false
-          }
-        ]
-      },
-      {
-        id: 4,
-        question: 'Выберите тег для создания маркированного списка?',
-        answers: [
-          {
-            text: '<dl>',
-            correct: false
-          },
-          {
-            text: '<ol>',
-            correct: true
-          },
-          {
-            text: '<list>',
-            correct: false
-          },
-          {
-            text: '<ul>',
-            correct: false
-          },
-        ]
-      },
-      {
-        id: 5,
-        question: 'Выберите верный способ создания чекбокса?',
-        answers: [
-          {
-            text: '<check>',
-            correct: false
-          },
-          {
-            text: '<input type="checkbox">',
-            correct: true
-          },
-          {
-            text: '<input type="check">',
-            correct: false
-          },
-          {
-            text: '<checkbox>',
-            correct: false
-          },
-        ]
-      },
-    ]
+        question: '',
+        answers: []
+      }
+    ],
+    testID: this.props.match.params.testID
+  }
+
+  async componentDidMount() {
+    try {
+      let { data: test } = await axios.get(`/quizes/${this.state.testID}.json`)
+
+      // TODO: Убирает значения null из массива
+      test = test.filter(item => item)
+
+      this.setState({ test })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   isLastQuestion = () => {

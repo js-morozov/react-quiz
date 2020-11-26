@@ -29,7 +29,7 @@ class App extends React.Component {
       routes = (
         <Switch>
           <Route exact path="/" component={QuizList} />
-          <Route exact path="/test" component={Quiz} />
+          <Route exact path="/test/:testID" component={Quiz} />
           <Route exact path="/create-test" component={TestCreator} />
           <Route exact path="/logout" component={Logout} />
           <Redirect to="/" />

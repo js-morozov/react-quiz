@@ -23,12 +23,6 @@ const TheHeader = (props) => {
       visible: props.isAuthenticated
     },
     {
-      to: '/test',
-      label: 'Test',
-      exact: true,
-      visible: props.isAuthenticated
-    },
-    {
       to: '/logout',
       label: 'Logout',
       exact: true,
