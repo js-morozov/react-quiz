@@ -1,6 +1,7 @@
 import React from 'react';
 import './TestCreator.scss'
 import Input from '../../components/Input/Input';
+import Select from '../../components/Select/Select';
 import Button from '../../components/Button/Button'
 import Radio from '../../components/Radio/Radio'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,7 +13,18 @@ export default class TestCreator extends React.Component {
   state = {
     test: [],
     question: '',
-    answers: [{ text: '', correct: false }]
+    answers: [{ text: '', correct: false }],
+    type: 0,
+    itemsType: [
+      {
+        value: 0,
+        text: 'Одиночный выбор'
+      },
+      {
+        value: 1,
+        text: 'Множественный выбор'
+      }
+    ]
   }
 
   addAnswer = () => {
@@ -80,6 +92,14 @@ export default class TestCreator extends React.Component {
     return (
       <form onSubmit={this.submitHandler} className="test-creator">
         <h1 className="test-creator__title">Создать тест</h1>
+        <div className="test-creator__item">
+          <Select
+            label="Тип вопроса"
+            items={this.state.itemsType}
+            value={this.state.type}
+            onChange={(e) => this.setState({ type: +e.target.value })}
+          />
+        </div>
         <div className="test-creator__item">
           <Input label="Вопрос" value={this.state.question} onChange={(e) => this.setState({ question: e.target.value })} />
         </div>
